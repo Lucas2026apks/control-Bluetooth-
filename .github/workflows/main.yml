@@ -24,8 +24,9 @@ jobs:
       - name: Fabricar con Buildozer
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          buildozer android debug
-        # Nota: Este paso tardará unos 15-20 minutos
+          # Esta línea acepta las licencias automáticamente
+          mkdir -p ~/.android && touch ~/.android/repositories.cfg
+          yes | buildozer android debug
 
       - name: Subir APK
         uses: actions/upload-artifact@v4
