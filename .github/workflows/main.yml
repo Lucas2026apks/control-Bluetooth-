@@ -6,24 +6,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar dependencias del sistema
+      - name: Instalar herramientas básicas
         run: |
           sudo apt update
-          sudo apt install -y build-essential git python3 python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libsqlite3-dev sqlite3 bzip2 libbz2-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev libtool autoconf
-          pip3 install --user --upgrade buildozer cython virtualenv
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          sudo apt install -y python3-pip export-subst git zip unzip
+          pip3 install --user buildozer cython==0.29.33
 
-      - name: Fabricar APK con Buildozer
+      - name: Fabricar con Buildozer
         run: |
-          # Acepta licencias y fabrica
+          # Usamos un comando que fuerza la aceptación de licencias
+          export PATH=$PATH:$HOME/.local/bin
           yes | buildozer android debug
         
-      - name: Subir Archivo APK
+      - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
-          name: Control_Bluetooth_Lucas
+          name: App_Control_Final
           path: bin/*.apk
