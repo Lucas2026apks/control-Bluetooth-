@@ -1,22 +1,19 @@
-name: Fabricar mi APK
-on:
-  push:
-    branches: [ master ]
+[app]
+title = Control Bluetooth
+package.name = control_anez
+package.domain = org.anez
+source.dir = .
+source.include_exts = py,png,jpg,kv,json
+version = 0.1
+requirements = python3,kivy,pyjnius
+android.permissions = BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT, BLUETOOTH_SCAN, ACCESS_FINE_LOCATION
+orientation = landscape
+fullscreen = 1
+android.api = 33
+android.minapi = 21
+android.ndk = 25b
+android.archs = arm64-v8a
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1.6.1
-        with:
-          command: buildozer android debug
-          buildozer_version: master
-
-      - name: Subir APK Final
-        uses: actions/upload-artifact@v4
-        with:
-          name: Control_Auto_Anez
-          path: bin/*.apk
+[buildozer]
+log_level = 2
+warn_on_root = 1
