@@ -1,27 +1,22 @@
-[app]
-title = control bluetooth
-package.name = control 
-package.domain = org.Lucas mateo anez
-source.dir = .
-source.include_exts = py,png,jpg,kv,json
-version = 0.1
+name: Fabricar mi APK
+on:
+  push:
+    branches: [ master ]
 
-# Requerimientos de software
-requirements = python3,kivy,pyjnius
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-# Permisos para Bluetooth y ubicación (necesario en Android moderno)
-android.permissions = BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_CONNECT, BLUETOOTH_SCAN, ACCESS_FINE_LOCATION
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1.6.1
+        with:
+          command: buildozer android debug
+          buildozer_version: master
 
-# Orientación para el control
-orientation = landscape
-fullscreen = 1
-
-# Configuración para la "fábrica" de GitHub
-android.api = 33
-android.minapi = 21
-android.ndk = 25b
-android.archs = arm64-v8a
-
-[buildozer]
-log_level = 2
-warn_on_root = 1
+      - name: Subir APK Final
+        uses: actions/upload-artifact@v4
+        with:
+          name: Control_Auto_Anez
+          path: bin/*.apk
