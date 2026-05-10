@@ -6,20 +6,23 @@ on:
 
 jobs:
   build:
-    # Usamos la versión 22.04 que es la más estable para Kivy
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
+      - name: Configurar Node.js (Solución al aviso)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: Build with Buildozer
-        # Esta acción ya tiene todo instalado y configurado correctamente
         uses: ArtemSBulgakov/buildozer-action@v1
         with:
           command: buildozer android debug
           buildozer_version: master
 
-      - name: Subir APK
+      - name: Subir APK Final
         uses: actions/upload-artifact@v4
         with:
-          name: Control_Anez_Final
+          name: Control_Auto_Anez
           path: bin/*.apk
