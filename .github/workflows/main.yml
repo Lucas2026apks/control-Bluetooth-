@@ -19,7 +19,6 @@ jobs:
 
       - name: Fabricar con Buildozer
         run: |
-          # Esto acepta las licencias de Google y fabrica el APK
           yes | buildozer android debug
         
       - name: Subir APK
