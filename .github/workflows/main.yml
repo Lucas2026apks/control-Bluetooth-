@@ -1,8 +1,6 @@
-name: Fabricar mi APK
+name: APK Rapida
 on:
-  push:
-    branches: [ master ]
-  workflow_dispatch:
+  workflow_dispatch: # Esto te permite darle al botón "Run" manualmente
 
 jobs:
   build:
@@ -10,20 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar herramientas básicas
-        run: |
-          sudo apt update
-          sudo apt install -y python3-pip export-subst git zip unzip
-          pip3 install --user buildozer cython==0.29.33
-
       - name: Fabricar con Buildozer
-        run: |
-          # Usamos un comando que fuerza la aceptación de licencias
-          export PATH=$PATH:$HOME/.local/bin
-          yes | buildozer android debug
-        
-      - name: Subir APK
-        uses: actions/upload-artifact@v4
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          name: App_Control_Final
-          path: bin/*.apk
+          command: buildozer android debug
+          buildozer_version: master
