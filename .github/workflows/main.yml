@@ -10,23 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar dependencias del sistema
+      - name: Instalar herramientas
         run: |
           sudo apt update
-          sudo apt install -y python3-pip build-essential git python3 python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libsqlite3-dev sqlite3 bzip2 libbz2-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev libtool autoconf
-
-      - name: Instalar Buildozer
-        run: |
+          sudo apt install -y build-essential git python3 python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libsqlite3-dev sqlite3 bzip2 libbz2-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev libtool autoconf
           pip install --user --upgrade buildozer cython virtualenv
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Fabricar con Buildozer
         run: |
-          # Acepta licencias automáticamente y construye
+          # Esto acepta las licencias de Google y fabrica el APK
           yes | buildozer android debug
         
       - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
-          name: Control_Bluetooth_APK
+          name: Control_Bluetooth_Lucas
           path: bin/*.apk
