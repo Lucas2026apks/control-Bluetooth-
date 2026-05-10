@@ -6,23 +6,20 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Usamos la versión 22.04 que es la más estable para Kivy
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
-      - name: Instalar herramientas
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential git python3 python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good libsqlite3-dev sqlite3 bzip2 libbz2-dev libssl-dev openssl libgdbm-dev libgdbm-compat-dev liblzma-dev libreadline-dev libncursesw5-dev libffi-dev uuid-dev libtool autoconf
-          pip install --user --upgrade buildozer cython virtualenv
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Build with Buildozer
+        # Esta acción ya tiene todo instalado y configurado correctamente
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          command: buildozer android debug
+          buildozer_version: master
 
-      - name: Fabricar con Buildozer
-        run: |
-          yes | buildozer android debug
-        
       - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
-          name: Control_Bluetooth_Lucas
+          name: Control_Anez_Final
           path: bin/*.apk
