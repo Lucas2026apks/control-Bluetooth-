@@ -3,6 +3,7 @@ title = Control Bluetooth
 package.name = control_anez
 package.domain = org.anez
 source.dir = .
+# ... resto de la configuración ...
 source.include_exts = py,png,jpg,kv,json
 version = 0.1
 requirements = python3,kivy,pyjnius
